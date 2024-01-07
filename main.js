@@ -13,4 +13,11 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
+
+const geometry = new THREE.SphereGeometry(15,50,16);
+const material = new THREE.MeshBasicMaterial( {color: 0xFF6347, wireframe: true});
+const sphere = new THREE.Mesh(geometry, material);
+
+scene.add(sphere);
+
 renderer.render(scene, camera);
