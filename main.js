@@ -1,5 +1,6 @@
 import './style.css'
 import * as THREE from 'three';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const scene = new THREE.Scene();
 
@@ -18,6 +19,26 @@ const geometry = new THREE.SphereGeometry(15,50,16);
 const material = new THREE.MeshBasicMaterial( {color: 0xFF6347, wireframe: true});
 const sphere = new THREE.Mesh(geometry, material);
 
+document.addEventListener('mousemove', onDocumentMouseMove)
+
+function onDocumentMouseMove(e) {
+  mouseX = e.clientX
+  mouseY = e.clientY
+}
+
+// const controls = new OrbitControls(camera, renderer.domElement);
+
+function animate() {
+  requestAnimationFrame(animate);
+  sphere.rotation.x += 0.01;
+  sphere.rotation.y += 0.005;
+  sphere.rotation.z += 0.01;
+
+  // controls.update();
+  renderer.render(scene, camera);
+}
+
 scene.add(sphere);
 
 renderer.render(scene, camera);
+animate()
