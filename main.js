@@ -40,9 +40,14 @@ function animate() {
   target.y = (-mouseY);
   // target.z = camera.position.z
   sphere.lookAt(target)
-  console.log(target)
-  sphere.position.x += (mouseX - sphere.position.x) * 0.001
+  sphere.position.x += (mouseX * 0.12 - sphere.position.x) * 0.02
+  sphere.position.y += (-mouseY * 0.12 - sphere.position.y) * 0.02
+
+
   // controls.update();
+  // console.log(target.x - sphere.position.x)
+  console.log(target.x, sphere.position.x)
+  // console.log(sphere.position.x)
   renderer.render(scene, camera);
 }
 
