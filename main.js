@@ -2,6 +2,8 @@ import './style.css'
 import * as THREE from 'three';
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+const target = new THREE.Vector3
+
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -16,24 +18,30 @@ camera.position.setZ(30);
 
 
 const geometry = new THREE.SphereGeometry(15,50,16);
+// const geometry = new THREE.BoxGeometry(15,15,15);
 const material = new THREE.MeshBasicMaterial( {color: 0xFF6347, wireframe: true});
 const sphere = new THREE.Mesh(geometry, material);
 
+
 document.addEventListener('mousemove', onDocumentMouseMove)
 
-function onDocumentMouseMove(e) {
-  mouseX = e.clientX
-  mouseY = e.clientY
-}
+let mouseX = 0
+let mouseY = 0
 
+function onDocumentMouseMove(e) {
+  mouseX = e.clientX - window.innerWidth/2
+  mouseY = e.clientY - window.innerHeight/2
+}
 // const controls = new OrbitControls(camera, renderer.domElement);
 
 function animate() {
   requestAnimationFrame(animate);
-  sphere.rotation.x += 0.01;
-  sphere.rotation.y += 0.005;
-  sphere.rotation.z += 0.01;
-
+  target.x = (mouseX);
+  target.y = (-mouseY);
+  // target.z = camera.position.z
+  sphere.lookAt(target)
+  console.log(target)
+  sphere.position.x += (mouseX - sphere.position.x) * 0.001
   // controls.update();
   renderer.render(scene, camera);
 }
