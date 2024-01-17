@@ -1,6 +1,6 @@
 import './style.css'
 import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const target = new THREE.Vector3
 
@@ -15,7 +15,7 @@ const renderer = new THREE.WebGL1Renderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
-
+const controls = new OrbitControls(camera, renderer.domElement);
 
 const geometry = new THREE.SphereGeometry(7,50);
 const material = new THREE.MeshBasicMaterial( {color: 0xFF6347, wireframe: true});
@@ -63,9 +63,9 @@ function shrink() {
 
 function animate() {
   requestAnimationFrame(animate);
+  sphere.rotation.z += 0.01
   target.x = (mouseX);
   target.y = (-mouseY);
-  sphere.lookAt(target)
   sphere.position.x += (mouseX * 0.12 - sphere.position.x) * 0.02
   sphere.position.y += (-mouseY * 0.12 - sphere.position.y) * 0.02
   
@@ -76,6 +76,8 @@ function animate() {
   if (event === true && sphere.scale.x < 0.01) {
     sphere.scale.set(0,0,0)
   }
+
+  controls.update();
 
   renderer.render(scene, camera);
 }
