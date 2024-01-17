@@ -17,10 +17,21 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 const controls = new OrbitControls(camera, renderer.domElement);
 
-const geometry = new THREE.SphereGeometry(7,50);
-const material = new THREE.MeshBasicMaterial( {color: 0xFF6347, wireframe: true});
+scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+const dirLight = new THREE.DirectionalLight(0xffffff, 1.0)
+dirLight.position.x += 20
+dirLight.position.y += 20
+dirLight.position.z += 20
+
+scene.add(dirLight)
+
+const geometry = new THREE.SphereGeometry(4.5,50);
+// const material = new THREE.MeshBasicMaterial( {color: 0xFF6347});
+const material = new THREE.MeshStandardMaterial( {color: 0xFF6347});
 const sphere = new THREE.Mesh(geometry, material);
 
+sphere.receiveShadow = true
+sphere.castShadow = true
 
 document.addEventListener('mousemove', onDocumentMouseMove)
 
@@ -39,7 +50,7 @@ function shrink() {
   sizeGoal = 0
 
   if (event === false) {
-    Math.random() > 0.9 ? event = true : event
+    Math.random() > 0.8 ? event = true : event
   }
   // console.log(event)
 
@@ -48,7 +59,7 @@ function shrink() {
       sizeGoal = -1
     }
     if (sphere.scale.x <= 0.01) {
-      if (Math.random() > 0.7) {
+      if (Math.random() > 0.4) {
         sizeGoal = 1
         event = !event
       }
