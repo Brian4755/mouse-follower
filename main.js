@@ -51,6 +51,7 @@ const sphere = new THREE.Mesh(geometry, material);
 // sphere.castShadow = true
 
 document.addEventListener('mousemove', onDocumentMouseMove)
+controls.enableZoom = false;
 
 let mouseX = 0
 let mouseY = 0
@@ -82,6 +83,7 @@ function shrink() {
       }
     }
   }
+  console.log( mouseX, sphere.position.x)
   // console.log(sphere.scale.x, sizeGoal)
   setTimeout(shrink, 2000)
 }
@@ -94,16 +96,16 @@ function animate() {
   sphere.rotation.z += 0.01
   target.x = (mouseX);
   target.y = (-mouseY);
-  sphere.position.x += (mouseX * 0.12 - sphere.position.x) * 0.02
-  sphere.position.y += (-mouseY * 0.12 - sphere.position.y) * 0.02
+  sphere.position.x += (mouseX * 0.119 - sphere.position.x) * 0.03
+  sphere.position.y += (-mouseY * 0.119 - sphere.position.y) * 0.03
   
 
-  sphere.scale.x += sizeGoal * 0.01
-  sphere.scale.y += sizeGoal * 0.01
-  sphere.scale.z += sizeGoal * 0.01
-  if (event === true && sphere.scale.x < 0.01) {
-    sphere.scale.set(0,0,0)
-  }
+  // sphere.scale.x += sizeGoal * 0.01
+  // sphere.scale.y += sizeGoal * 0.01
+  // sphere.scale.z += sizeGoal * 0.01
+  // if (event === true && sphere.scale.x < 0.01) {
+  //   sphere.scale.set(0,0,0)
+  // }
 
   controls.update();
 
