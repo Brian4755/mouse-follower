@@ -2,6 +2,14 @@ import './style.css'
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+const textureLoader = new THREE.TextureLoader();
+
+const waterBaseColor = textureLoader.load("./public/Water_002_COLOR.jpg");
+const waterNormalMap = textureLoader.load("./public/Water_002_NORM.jpg");
+const waterHeightMap = textureLoader.load("./public/Water_002_DISP.png");
+const waterRoughness = textureLoader.load("./public/Water_002_ROUGH.jpg");
+const waterAmbientOcclusion = textureLoader.load("./public/Water_002_OCC.jpg");
+
 const target = new THREE.Vector3
 
 const scene = new THREE.Scene();
@@ -18,20 +26,29 @@ camera.position.setZ(30);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-const dirLight = new THREE.DirectionalLight(0xffffff, 1.0)
+const dirLight = new THREE.DirectionalLight(0xffffff, 8.0)
 dirLight.position.x += 20
 dirLight.position.y += 20
 dirLight.position.z += 20
+dirLight.castShadow = true
 
 scene.add(dirLight)
 
 const geometry = new THREE.SphereGeometry(4.5,50);
-// const material = new THREE.MeshBasicMaterial( {color: 0xFF6347});
-const material = new THREE.MeshStandardMaterial( {color: 0xFF6347});
+// const material = new THREE.MeshBasicMaterial({
+//   map: waterBaseColor,
+// });
+const material = new THREE.MeshStandardMaterial({
+  map: waterBaseColor,
+  normalMap: waterNormalMap, 
+  displacementMap: waterHeightMap, displacementScale: 0.01, 
+  roughnessMap: waterRoughness, roughness: 0, 
+  aoMap: waterAmbientOcclusion
+});
 const sphere = new THREE.Mesh(geometry, material);
 
-sphere.receiveShadow = true
-sphere.castShadow = true
+// sphere.receiveShadow = true
+// sphere.castShadow = true
 
 document.addEventListener('mousemove', onDocumentMouseMove)
 
