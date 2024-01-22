@@ -84,7 +84,7 @@ function shrink() {
 
 function animate() {
   requestAnimationFrame(animate);
-  sphere.rotation.z += 0.01
+  sphere.rotation.z += 0.02
   
   raycaster.setFromCamera( pointer, camera );
 
